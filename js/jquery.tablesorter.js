@@ -1193,14 +1193,13 @@
 				var matrix = [],
 				lookup = {},
 				cols = 0, // determine the number of columns
-				i, j, k, l, $cell, cell, cells, rowIndex, cellId, rowSpan, colSpan, firstAvailCol, matrixrow;
+				i, j, k, l, cell, cells, rowIndex, cellId, rowSpan, colSpan, firstAvailCol, matrixrow;
 				for (i = 0; i < trs.length; i++) {
 					cells = trs[i].cells;
 					for (j = 0; j < cells.length; j++) {
 						cell = cells[j];
-						$cell = $(cell);
-						rowIndex = cell.parentNode.rowIndex;
-						cellId = rowIndex + "-" + $cell.index();
+						rowIndex = i;
+						cellId = rowIndex + "-" + j;
 						rowSpan = cell.rowSpan || 1;
 						colSpan = cell.colSpan || 1;
 						if (typeof(matrix[rowIndex]) === "undefined") {
@@ -1216,7 +1215,8 @@
 						lookup[cellId] = firstAvailCol;
 						cols = Math.max(firstAvailCol, cols);
 						// add data-column
-						$cell.attr({ 'data-column' : firstAvailCol }); // 'data-row' : rowIndex
+						//$cell.attr({ 'data-column' : firstAvailCol }); // 'data-row' : rowIndex
+						cell.setAttribute('data-column', firstAvailCol);
 						for (k = rowIndex; k < rowIndex + rowSpan; k++) {
 							if (typeof(matrix[k]) === "undefined") {
 								matrix[k] = [];
